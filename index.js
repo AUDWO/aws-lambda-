@@ -12,7 +12,7 @@ exports.handler = async (event, context, callback) => {
   //버켓 이름
   const Bucket = event.Records[0].s3.bucket.name;
   //Key:파일 이름
-  const Key = decodeURIComponent(event.Records[0].s3.object.key); // original/example.png
+  const Key = event.Records[0].s3.object.key; // original/example.png
   const filename = Key.split("/").at(-1);
   //확장자
   const ext = Key.split(".").at(-1).toLowerCase();
