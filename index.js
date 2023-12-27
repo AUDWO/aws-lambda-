@@ -1,4 +1,13 @@
 //lambda는 3개의 매개변수를 제공하면서 함수를 호출
+const sharp = require("sharp");
+const {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+} = require("@aws-sdk/client-s3");
+
+const s3 = new S3Client();
+
 exports.handler = async (event, context, callback) => {
   //버켓 이름
   const Bucket = event.Records[0].s3.bucket.name;
