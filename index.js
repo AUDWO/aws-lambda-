@@ -11,13 +11,16 @@ const s3 = new S3Client();
 exports.handler = async (event, context, callback) => {
   //버켓 이름
   const Bucket = event.Records[0].s3.bucket.name;
+  console.log(Bucket, "bucket bucket bucket bucket");
   //Key:파일 이름
   const Key = decodeURIComponent(event.Records[0].s3.object.key); // original/example.png
+  console.log(Key, "key key key key key key key key");
   const filename = Key.split("/").at(-1);
+  console.log(filename, "file file file file file file file");
   //확장자
   const ext = Key.split(".").at(-1).toLowerCase();
   const requiredFormat = ext === "jpg" ? "jpeg" : ext;
-  console.log("name", filename, "ext", ext);
+  console.log("name name name name name ", filename, "ext", ext);
 
   try {
     //s3에서 resizing되지 않은 이미지 가져오기
