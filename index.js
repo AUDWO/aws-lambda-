@@ -31,7 +31,7 @@ exports.handler = async (event, context, callback) => {
     }
     const imageBuffer = Buffer.concat(buffers);
     const resizedImage = await sharp(imageBuffer)
-      .resize(250, 250, { fit: "inside" })
+      .resize(300, 300, { fit: "inside" })
       .toFormat(requiredFormat)
       .toBuffer();
     //다시 s3에 저장
