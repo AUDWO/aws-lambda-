@@ -31,6 +31,11 @@ exports.handler = async (event, context, callback) => {
     }
     const imageBuffer = Buffer.concat(buffers);
     const resizedImage = await sharp(imageBuffer)
+      .resize(250, 250, { fit: "inside" })
+      .toFormat(requiredFormat)
+      .toBuffer();
+
+    const lazyImage = await sharp(imageBuffer)
       .resize(50, 50, { fit: "inside" })
       .toFormat(requiredFormat)
       .toBuffer();
@@ -40,6 +45,13 @@ exports.handler = async (event, context, callback) => {
         Bucket,
         Key: `thumb/${filename}`,
         Body: resizedImage,
+      })
+    );
+    await s3.send(
+      new PutObjectCommand({
+        Bucket,
+        Key: `lazyload/${filename}`,
+        Body: lazyImage,
       })
     );
     console.log("put", resizedImage.length);
