@@ -34,11 +34,6 @@ exports.handler = async (event, context, callback) => {
       .resize(250, 250, { fit: "inside" })
       .toFormat(requiredFormat)
       .toBuffer();
-
-    const lazyImage = await sharp(imageBuffer)
-      .resize(50, 50, { fit: "inside" })
-      .toFormat(requiredFormat)
-      .toBuffer();
     //다시 s3에 저장
     await s3.send(
       new PutObjectCommand({
@@ -47,13 +42,7 @@ exports.handler = async (event, context, callback) => {
         Body: resizedImage,
       })
     );
-    await s3.send(
-      new PutObjectCommand({
-        Bucket,
-        Key: `lazyload/${filename}`,
-        Body: lazyImage,
-      })
-    );
+
     console.log("put", resizedImage.length);
     //첫번째 error 두번째 응답값
     return callback(null, `thumb/${filename}`);
