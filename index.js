@@ -13,7 +13,9 @@ exports.handler = async (event, context, callback) => {
   const Bucket = event.Records[0].s3.bucket.name;
   console.log(Bucket, "bucket bucket bucket bucket");
   //Key:파일 이름
-  const Key = decodeURIComponent(event.Records[0].s3.object.key); // original/example.png
+  const Key = decodeURIComponent(
+    event.Records[0].s3.object.key.replace(/\s+/g, "_")
+  ); // original/example.png
   console.log(Key, "key key key key key key key key");
   const filename = Key.split("/").at(-1);
   console.log(filename, "file file file file file file file");
