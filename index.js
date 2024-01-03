@@ -31,14 +31,14 @@ exports.handler = async (event, context, callback) => {
     }
     const imageBuffer = Buffer.concat(buffers);
     const resizedImage = await sharp(imageBuffer)
-      .resize(250, 250, { fit: "inside" })
+      .resize(270, 270, { fit: "inside" })
       .toFormat(requiredFormat)
       .toBuffer();
     //다시 s3에 저장
     await s3.send(
       new PutObjectCommand({
         Bucket,
-        Key: `thumb/${filename}`,
+        Key: `thumb/${filename.replace(/ /g, "+")}`,
         Body: resizedImage,
       })
     );
