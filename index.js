@@ -38,7 +38,7 @@ exports.handler = async (event, context, callback) => {
     await s3.send(
       new PutObjectCommand({
         Bucket,
-        Key: `thumb/${filename.replace(/ /g, "+")}`,
+        Key: `thumb/${filename}`,
         Body: resizedImage,
       })
     );
